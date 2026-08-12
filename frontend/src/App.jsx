@@ -233,25 +233,25 @@ export default function App() {
 
   const fieldLabels = {
 
-    chronological_age: 'Chronological Age (อายุจริง)',
+    chronological_age: 'Chronological Age (อายุจริง) · ปี',
 
-    albumin: 'Albumin (อัลบูมิน)',
+    albumin: 'Albumin (อัลบูมิน) · g/dL',
 
-    creatinine: 'Creatinine (ครีอะทีนีน)',
+    creatinine: 'Creatinine (ครีอะทีนีน) · mg/dL',
 
-    glucose: 'Glucose (น้ำตาลในเลือด)',
+    glucose: 'Glucose (น้ำตาลในเลือด) · mg/dL',
 
-    crp: 'CRP (การอักเสบ)',
+    crp: 'CRP (การอักเสบ) · mg/L',
 
-    lymphocyte_percent: 'Lymphocyte %',
+    lymphocyte_percent: 'Lymphocyte (ลิมโฟไซต์) · %',
 
-    mcv: 'MCV (ขนาดเม็ดเลือดแดง)',
+    mcv: 'MCV (ขนาดเม็ดเลือดแดง) · fL',
 
-    rdw: 'RDW (การกระจายเม็ดเลือด)',
+    rdw: 'RDW (การกระจายเม็ดเลือด) · %',
 
-    wbc: 'WBC (ปริมาณเม็ดเลือดขาว)',
+    wbc: 'WBC (ปริมาณเม็ดเลือดขาว) · ×10³/uL',
 
-    alp: 'ALP (อัลคาไลน์ ฟอสฟาเตส)',
+    alp: 'ALP (อัลคาไลน์ ฟอสฟาเตส) · U/L',
 
   };
 
@@ -1304,7 +1304,7 @@ export default function App() {
 
                 <h3 style={{ fontSize: '20px', fontWeight: '800', margin: '0 0 4px 0', color: '#0f172a' }}>
 
-                  🩸 กรอกผลตรวจเลือด 9 รายการ (PhenoAge Biomarkers)
+                  ผลตรวจเลือด 9 รายการจากฐานข้อมูล (PhenoAge Biomarkers)
 
                 </h3>
 
@@ -1387,6 +1387,12 @@ export default function App() {
                       required
 
                     />
+
+                    {key === 'wbc' && (
+                      <span style={{ fontSize: '11px', color: '#94a3b8', display: 'block', marginTop: '6px' }}>
+                        กรอกเป็นทศนิยม เช่น 6.50 หมายถึง 6,500 เซลล์/uL (ไม่ใช่กรอกเลข 6500 ตรงๆ)
+                      </span>
+                    )}
 
                   </div>
 
@@ -1530,7 +1536,7 @@ export default function App() {
 
               <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '20px', border: '1px solid #f1f5f9', marginBottom: '20px', maxWidth: '260px' }}>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', marginBottom: '8px' }}>
-                  Chronological Age (อายุจริง)
+                  Chronological Age (อายุจริง) · ปี
                 </label>
                 <input
                   type="number"
