@@ -112,7 +112,7 @@ export default function App() {
 
 
 
-  // 🫁 2. ส่งภาพ X-ray ไปให้ AI (DenseNet-121) ประมวลผล
+  // 🫁 2. ส่งภาพ X-ray ไปให้ AI (ResNet-34) ประมวลผล
 
   const handleCxrSubmit = async (e) => {
 
@@ -523,7 +523,7 @@ export default function App() {
 
             >
 
-              <span style={{ fontSize: '18px' }}>🖨️</span> ใบสรุปผล (Print)
+              <span style={{ fontSize: '18px' }}></span> ใบสรุปผล (Print)
 
             </button>
 
@@ -579,7 +579,7 @@ export default function App() {
 
           <div>
 
-            <div style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>BUk KungFu</div>
+            <div style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>Kungfu Ban Nok</div>
 
             <span style={{ fontSize: '11px', color: '#94a3b8' }}>Patient ID: #9239</span>
 
@@ -669,7 +669,7 @@ export default function App() {
 
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
 
-              FastAPI System Connected
+              FastAPI Connected
 
             </div>
 
@@ -701,7 +701,7 @@ export default function App() {
           marginBottom: '24px',
           fontWeight: '600'
         }}>
-          ⚠️ เครื่องมือสนับสนุนการตัดสินใจทางคลินิกนี้ <b>ไม่ใช่เครื่องมือวินิจฉัยทางการแพทย์</b> อัลกอริทึม (CXR-Age, PhenoAge)
+          เครื่องมือสนับสนุนการตัดสินใจทางคลินิกนี้ <b>ไม่ใช่เครื่องมือวินิจฉัยทางการแพทย์</b> อัลกอริทึม (CXR-Age, PhenoAge)
           เป็นงานวิจัยต่างประเทศที่<b>ยังไม่ได้ validate กับกลุ่มตัวอย่างคนไทย</b> และคะแนนภาพรวมยังเป็นค่าเฉลี่ยอย่างง่ายที่ยังไม่ได้ปรับเทียบ
           ผลลัพธ์สะท้อนเฉพาะสิ่งที่วัดได้จากภาพเอกซเรย์และผลเลือด ไม่ครอบคลุมความเสี่ยงสุขภาพทุกด้าน หากพบค่าผิดปกติ
           <b> ควรปรึกษาแพทย์เสมอ</b> ไม่ควรใช้ผลจากระบบนี้ตัดสินใจเรื่องสุขภาพด้วยตนเอง · ข้อมูลที่กรอกในเครื่องนี้ถือเป็น
@@ -725,7 +725,7 @@ export default function App() {
             />
             <span>
               ข้าพเจ้ายินยอมให้นำผลตรวจสุขภาพ (ผลเลือด/ภาพเอกซเรย์) มาใช้คำนวณอายุชีวภาพตามวัตถุประสงค์ที่แจ้งไว้ข้างต้นเท่านั้น
-              และเข้าใจว่าสามารถถอนความยินยอมได้ตลอดเวลา — ต้องติ๊กยอมรับก่อนจึงจะกดคำนวณผลได้ (ระบบไม่บันทึกค่ายินยอมนี้ไว้ที่ใด)
+              และเข้าใจว่าสามารถถอนความยินยอมได้ตลอดเวลา — ต้องติ๊กยอมรับก่อนจึงจะกดคำนวณผลได้
             </span>
           </label>
         </div>
@@ -914,7 +914,7 @@ export default function App() {
 
                 </div>
 
-                <span style={{ fontSize: '12px', color: '#64748b' }}>DenseNet-121 PyTorch Model</span>
+                <span style={{ fontSize: '12px', color: '#64748b' }}>ResNet-34 PyTorch Model</span>
 
               </div>
 
@@ -1442,7 +1442,7 @@ export default function App() {
 
               >
 
-                {loading ? 'Calculating PhenoAge...' : !consentChecked ? '🔒 ต้องติ๊กยินยอม PDPA ด้านบนก่อน' : 'Calculate PhenoAge Result ↗'}
+                {loading ? 'Calculating PhenoAge...' : !consentChecked ? ' ต้องติ๊กยินยอม PDPA ด้านบนก่อน' : 'Calculate PhenoAge Result ↗'}
 
               </button>
 
@@ -1455,7 +1455,7 @@ export default function App() {
                 color: '#ffffff',
                 padding: '28px',
                 borderRadius: '24px',
-                boxShadow: '0 15px 30px -5px rgba(16, 185, 129, 0.35)'
+                boxShadow: '0 15px 30px -5px rgba(16, 185, 129, 0.47)'
               }}>
                 <span style={{ fontSize: '13px', fontWeight: '700', opacity: 0.9 }}>PhenoAge Result</span>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', margin: '8px 0 4px 0' }}>
@@ -1510,7 +1510,7 @@ export default function App() {
 
                 <h3 style={{ fontSize: '20px', fontWeight: '800', margin: '0 0 4px 0', color: '#0f172a' }}>
 
-                  🫁 อัปโหลดภาพ Chest X-ray (DenseNet-121)
+                   อัปโหลดภาพ Chest X-ray (ResNet-34)
 
                 </h3>
 
@@ -1721,7 +1721,7 @@ export default function App() {
                   )}
                 </div>
                 <span style={{ fontSize: '12px', color: '#64748b' }}>
-                  เทียบกับอายุจริง {cxrResult.chronological_age ?? '—'} ปี · โมเดล DenseNet-121 (CXR-Age, Raghu et al. 2021) —
+                  เทียบกับอายุจริง {cxrResult.chronological_age ?? '—'} ปี · โมเดล ResNet-34 (CXR-Age, Raghu et al. 2021) —
                   ยังไม่ได้ validate กับภาพเอกซเรย์คนไทย ใช้เพื่อสร้างความตระหนักรู้เบื้องต้นเท่านั้น
                 </span>
               </div>
