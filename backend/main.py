@@ -37,38 +37,26 @@ app.add_middleware(
 # ==========================================
 #  LOAD CXR-AGE AI MODEL (DenseNet121)
 # ==========================================
+# หมายเหตุหน่วยความจำ: ไฟล์ checkpoint ต้นฉบับจาก fastai (~245MB) มี key 'opt' ติดมาด้วย
+# ซึ่งคือ state ของ Adam optimizer (exp_avg/exp_avg_sq) ที่ไม่จำเป็นต้องใช้ตอน inference เลย
+# แต่ทำให้ตอนโหลดพีคหน่วยความจำไปเกิน 512MB (พังบน hosting free tier ทั่วไปทันที)
+# ไฟล์นี้ถูก re-save ไว้ล่วงหน้าให้เหลือแค่ state_dict ของโมเดล (87MB) ด้วยสคริปต์แยกต่างหาก
+# ทำให้พีคหน่วยความจำตอนโหลด+รันจริงอยู่ที่ราว 425MB เท่านั้น
 MODEL_PATH = "PLCO_Fine_Tuned_120419.pth"
 device = torch.device("cpu") # รันบน CPU ได้สบายๆ
 
 def load_cxr_model():
     # 1. สร้างโครงสร้าง DenseNet121
     model = models.densenet121(weights=None)
-    
+
     # FastAI head มักจะเปลี่ยน output เป็น 1 (สำหรับการทำ Regression ทำนายอายุ)
     num_ftrs = model.classifier.in_features
     model.classifier = nn.Linear(num_ftrs, 1)
 
     try:
-        # 2. โหลด Weight .pth
-        checkpoint = torch.load(MODEL_PATH, map_location=device, weights_only=False)
-        
-        # ดึง state_dict
-        if isinstance(checkpoint, dict) and 'model' in checkpoint:
-            state_dict = checkpoint['model']
-        elif isinstance(checkpoint, dict) and 'state_dict' in checkpoint:
-            state_dict = checkpoint['state_dict']
-        else:
-            state_dict = checkpoint
-
-        # 3. แปลงชื่อ Key จาก FastAI v1 (0.features... -> features...)
-        clean_state_dict = {}
-        for k, v in state_dict.items():
-            new_key = k
-            if new_key.startswith('0.'):
-                new_key = new_key[2:]
-            if new_key.startswith('1.1.'): # linear layer ของ head
-                new_key = new_key.replace('1.1.', 'classifier.')
-            clean_state_dict[new_key] = v
+        # โหลด state_dict ที่ทำความสะอาดไว้ล่วงหน้าแล้ว (ไม่มี optimizer state ติดมา)
+        # weights_only=True ทั้งประหยัดหน่วยความจำกว่าและปลอดภัยกว่า (ไม่ unpickle object ใดๆ นอกจาก tensor)
+        clean_state_dict = torch.load(MODEL_PATH, map_location=device, weights_only=True)
 
         # โหลดเข้าโมเดลแบบยืดหยุ่น
         model.load_state_dict(clean_state_dict, strict=False)

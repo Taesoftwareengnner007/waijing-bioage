@@ -9,6 +9,7 @@ backend/venv/
 backend/__pycache__/
 *.pyc
 backend/.env
+*.pth.bak
 
 # OS / editor
 .DS_Store
